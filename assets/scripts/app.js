@@ -7,6 +7,12 @@ const events = require('./tic-tac-toe/events')
 // require('./example')
 
 $(() => {
+  $('#change-password').hide()
+  $('#sign-out').hide()
+
+  $('#game-start').hide()
+  $('.col-4').hide()
+
   $('#sign-up').on('submit', events.onSignUp)
   $('#sign-in').on('submit', events.onSignIn)
   $('#change-password').on('submit', events.onChangePassword)
@@ -22,4 +28,5 @@ $(() => {
   $('#index-7').on('click', events.placeGamePieces)
   $('#index-8').on('click', events.placeGamePieces)
 
+  $('#game-start').on('click', events.gameStart)
 })

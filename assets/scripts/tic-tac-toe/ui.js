@@ -14,6 +14,14 @@ const onSignInSuccess = function (response) {
   $('#message').html(response.user.email + ' has been signed in')
   store.user = response.user
   $('#sign-in').trigger('reset')
+
+  $('#change-password').show()
+  $('#sign-out').show()
+
+  $('#sign-up').hide()
+  $('#sign-in').hide()
+
+  $('#game-start').show()
 }
 
 const onSignInFailure = function (response) {
@@ -21,10 +29,20 @@ const onSignInFailure = function (response) {
   $('#sign-in').trigger('reset')
 }
 
+const startGameSuccess = function () {
+  $('col-4').show()
+}
+
 const onSignOutSuccess = function (response) {
   $('#message').html('User has been signed out')
   store.user = null
   $('#sign-out').trigger('reset')
+
+  $('#change-password').hide()
+  $('#sign-out').hide()
+
+  $('#sign-up').show()
+  $('#sign-in').show()
 }
 
 const onSignOutFailure = function (response) {
@@ -50,6 +68,7 @@ module.exports = {
   onSignOutSuccess,
   onSignOutFailure,
   onChangePasswordSuccess,
-  onChangePasswordFailure
+  onChangePasswordFailure,
+  startGameSuccess
 
 }

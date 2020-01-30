@@ -1,6 +1,7 @@
 const getFormFields = require('./../../../lib/get-form-fields')
 const api = require('./api')
 const ui = require('./ui')
+const store = require('./../store')
 let placeMarkerX = true
 
 const placeGamePieces = function (event) {
@@ -14,6 +15,16 @@ const placeGamePieces = function (event) {
     $(spot).html('O')
     placeMarkerX = !placeMarkerX
   }
+}
+
+const gameStart = function () {
+  $('.col-4').show()
+  $('#game-start').hide()
+  const array = store.game
+  api.startGame(array)
+    .then(ui.startGameSuccess)
+    .catch(console.log('error creating game'))
+  console.log(store.game)
 }
 
 const onSignUp = function (event) {
@@ -59,5 +70,6 @@ module.exports = {
   onSignUp,
   onSignIn,
   onSignOut,
-  onChangePassword
+  onChangePassword,
+  gameStart
 }
