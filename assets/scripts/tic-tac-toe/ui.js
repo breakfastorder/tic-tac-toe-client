@@ -1,4 +1,5 @@
 const store = require('./../store')
+const gameLogic = require('./gameLogic')
 
 const onSignUpSuccess = function (response) {
   $('#message').html(response.user.email + ' has been signed up successfully')
@@ -29,8 +30,32 @@ const onSignInFailure = function (response) {
   $('#sign-in').trigger('reset')
 }
 
-const startGameSuccess = function () {
+const startGameSuccess = function (response) {
   $('col-4').show()
+  $('#message').html('game created')
+  store.game = response.game
+}
+
+const updateBoardSuccess = function (response) {
+  $('#message').html('game updated')
+  store.game = response.game
+  gameLogic.checkWinLoss()
+}
+
+const updateBoardFailure = function (response) {
+  $('#message').html('update failed')
+}
+
+const onShowSuccess = function (response) {
+  $('#message').html('Show sucess')
+}
+
+const onShowFailure = function (response) {
+  $('#message').html('Show failed')
+}
+
+const startGameFailure = function (response) {
+  $('#message').html('game creation failed, please try again')
 }
 
 const onSignOutSuccess = function (response) {
@@ -69,6 +94,11 @@ module.exports = {
   onSignOutFailure,
   onChangePasswordSuccess,
   onChangePasswordFailure,
-  startGameSuccess
+  startGameSuccess,
+  startGameFailure,
+  updateBoardSuccess,
+  updateBoardFailure,
+  onShowSuccess,
+  onShowFailure
 
 }

@@ -2,29 +2,60 @@ const getFormFields = require('./../../../lib/get-form-fields')
 const api = require('./api')
 const ui = require('./ui')
 const store = require('./../store')
-let placeMarkerX = true
+const gameLogic = require('./gameLogic')
+
+store.player = true
 
 const placeGamePieces = function (event) {
-  console.log(placeMarkerX)
-  event.preventDefault()
-  const spot = event.target
-  if (placeMarkerX && $(spot).html() === '') {
-    $(spot).html('X')
-    placeMarkerX = !placeMarkerX
-  } else if ($(spot).html() === '') {
-    $(spot).html('O')
-    placeMarkerX = !placeMarkerX
+  if (gameLogic.getGameOver() === false) {
+    // console.log(placeMarkerX)
+    event.preventDefault()
+    const spot = event.target
+    if (store.player && $(spot).html() === '') {
+      $(spot).html('X')
+      const data = {
+
+        'game': {
+          'cell': {
+            'index': spot.id,
+            'value': 'x'
+          },
+          'gameOver': false
+        }
+      }
+
+      api.updateBoard(data)
+        .then(ui.updateBoardSuccess)
+        .catch(ui.updateBoardFailure)
+      store.player = !store.player
+    } else if ($(spot).html() === '') {
+      $(spot).html('O')
+      const data = {
+
+        'game': {
+          'cell': {
+            'index': spot.id,
+            'value': 'o'
+          },
+          'gameOver': false
+        }
+      }
+      api.updateBoard(data)
+        .then(ui.updateBoardSuccess)
+        .catch(ui.updateBoardFailure)
+      store.player = !store.player
+    }
   }
 }
 
 const gameStart = function () {
   $('.col-4').show()
   $('#game-start').hide()
-  const array = store.game
-  api.startGame(array)
+  const game = store.game
+  api.startGame(game)
     .then(ui.startGameSuccess)
-    .catch(console.log('error creating game'))
-  console.log(store.game)
+    .catch(ui.startGameFailure)
+  // console.log(store.game)
 }
 
 const onSignUp = function (event) {
@@ -37,10 +68,10 @@ const onSignUp = function (event) {
     .catch(ui.onSignUpFailure)
 }
 
-const onSignIn = function (event) {
-  event.preventDefault()
-  const form = event.target
-  const data = getFormFields(form)
+const onSignIn = function (event) { // taking in sign in form
+  event.preventDefault() // prevents refresh of page
+  const form = event.target // set to where submit is being called
+  const data = getFormFields(form) // gets data from form sign in
   api.signIn(data)
     .then(ui.onSignInSuccess)
     .catch(ui.onSignInFailure)
@@ -65,11 +96,39 @@ const onChangePassword = function (event) {
     .catch(ui.onChangePasswordFailure)
 }
 
+const showBoardStatus = function () {
+  event.preventDefault()
+  console.log(store.game)
+  api.showGame(store.game.id)
+    .then(ui.onShowSuccess)
+    .catch(ui.onShowFailure)
+}
+
+const onResetGame = function () {
+  event.preventDefault()
+  // gameLogic.resetGame()
+  store.game = null
+  gameStart()
+  $('#0').html('')
+  $('#1').html('')
+  $('#2').html('')
+  $('#3').html('')
+  $('#4').html('')
+  $('#5').html('')
+  $('#6').html('')
+  $('#7').html('')
+  $('#8').html('')
+  gameLogic.setGameOver(false)
+  store.player = true
+}
+
 module.exports = {
   placeGamePieces,
   onSignUp,
   onSignIn,
   onSignOut,
   onChangePassword,
-  gameStart
+  gameStart,
+  showBoardStatus,
+  onResetGame
 }
