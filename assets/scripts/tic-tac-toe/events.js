@@ -11,8 +11,9 @@ const placeGamePieces = function (event) {
     // console.log(placeMarkerX)
     event.preventDefault()
     const spot = event.target
-    if (store.player && $(spot).html() === '') {
-      $(spot).html('X')
+    console.log(spot.id + ' spot id')
+    if ((store.player && $(spot).text() !== 'X') && (store.player && $(spot).text() !== 'O')) { // same thing
+      $(spot).text('X') //if buttons do html
       const data = {
 
         'game': {
@@ -20,16 +21,15 @@ const placeGamePieces = function (event) {
             'index': spot.id,
             'value': 'x'
           },
-          'gameOver': false
+          'gameOver': gameLogic.getGameOver()
         }
       }
-
       api.updateBoard(data)
         .then(ui.updateBoardSuccess)
         .catch(ui.updateBoardFailure)
       store.player = !store.player
-    } else if ($(spot).html() === '') {
-      $(spot).html('O')
+    } else if ((store.player === false && $(spot).text() !== 'X') && (store.player === false && $(spot).text() !== 'O')) { // same thing
+      $(spot).text('O') // if buttons do html
       const data = {
 
         'game': {
@@ -37,7 +37,7 @@ const placeGamePieces = function (event) {
             'index': spot.id,
             'value': 'o'
           },
-          'gameOver': false
+          'gameOver': gameLogic.getGameOver()
         }
       }
       api.updateBoard(data)
@@ -122,6 +122,11 @@ const onResetGame = function () {
   store.player = true
 }
 
+const testClick = function (event) {
+  event.preventDefault()
+  const spot = event.target
+  $(spot).text('X')
+}
 module.exports = {
   placeGamePieces,
   onSignUp,
@@ -130,5 +135,6 @@ module.exports = {
   onChangePassword,
   gameStart,
   showBoardStatus,
-  onResetGame
+  onResetGame,
+  testClick
 }

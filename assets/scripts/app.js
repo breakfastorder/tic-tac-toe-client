@@ -12,6 +12,8 @@ $(() => {
 
   $('#game-start').hide()
   // $('.col-4').hide()
+  $('#reset-game').hide()
+  $('#game-status').hide()
 
   $('#sign-up').on('submit', events.onSignUp)
   $('#sign-in').on('submit', events.onSignIn)

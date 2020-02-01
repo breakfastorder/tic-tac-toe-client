@@ -1,9 +1,26 @@
 @import '~bootstrap/scss/bootstrap';
-.col-4 {
-  background: black;
-  padding: 50px;
-  margin: 0px;
+  .col-4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    margin: 10px;
+  }
+
+
+
+  .board {
+    background: black;
+  }
+
+.zero, .one, .two {
+  background: blue;
 }
-.row {
-  background: white;
+
+.three, .four, .five {
+  background: red;
+}
+
+.six, .seven, .eight {
+  background: green;
 }
