@@ -66,4 +66,6 @@ $(() => {
   // $('#game-status').on('submit', events.showBoardStatus)
 
   $('#reset-game').on('submit', events.onResetGame)
+
+  $('#create-multiplayer').on('submit', events.onCreateMultiplayer)
 })

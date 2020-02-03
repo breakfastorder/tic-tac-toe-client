@@ -37,6 +37,11 @@ const startGameSuccess = function (response) {
   $('col-4').show()
   $('#message').html('Game created')
   store.game = response.game
+  console.log(store.game.id + ' in success')
+}
+
+const startGameFailure = function (response) {
+  $('#message').html('Game creation failed, please try again')
 }
 
 const updateBoardSuccess = function (response) {
@@ -58,10 +63,6 @@ const onShowSuccess = function (response) {
 
 const onShowFailure = function (response) {
   $('#message').html('Show failed')
-}
-
-const startGameFailure = function (response) {
-  $('#message').html('Game creation failed, please try again')
 }
 
 const onSignOutSuccess = function (response) {
@@ -101,6 +102,14 @@ const onChangePasswordFailure = function (response) {
   $('#change-password').trigger('reset')
 }
 
+const createMultiplayerSuccess = function (response) {
+  console.log('one step at a time')
+}
+
+const createMultiplayerFailure = function (response) {
+  console.log(response)
+}
+
 module.exports = {
   onSignUpSuccess,
   onSignUpFailure,
@@ -117,6 +126,7 @@ module.exports = {
   onShowSuccess,
   onShowFailure,
   onIndexSuccess,
-  onIndexFailure
-
+  onIndexFailure,
+  createMultiplayerSuccess,
+  createMultiplayerFailure
 }

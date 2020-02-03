@@ -62,7 +62,6 @@ const gameStart = function () {
   store.gameOver = false
   store.playerX = true
   $('#reset-game').show()
-
   const game = store.game
 
   api.startGame(game)
@@ -182,6 +181,14 @@ const showMenu = function (event) {
   store.showMenu = !store.showMenu
 }
 
+const onCreateMultiplayer = function () {
+  event.preventDefault()
+  // const game = store.game
+  api.createMultiplayer()
+    .then(ui.createMultiplayerSuccess)
+    .catch(ui.createMultiplayerFailure)
+}
+
 const testClick = function (event) {
   event.preventDefault()
   const spot = event.target
@@ -200,5 +207,6 @@ module.exports = {
   onGetIndexGames,
   checkValid,
   resetToWhite,
-  showMenu
+  showMenu,
+  onCreateMultiplayer
 }

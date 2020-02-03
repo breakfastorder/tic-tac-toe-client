@@ -1,5 +1,6 @@
 const config = require('./../config')
 const store = require('./../store')
+// const resourceWatcher = require('./resourceWatcher')
 
 const signUp = function (data) {
   return $.ajax({
@@ -81,10 +82,22 @@ const getIndex = function () {
     headers: {
       contentType: 'application/json',
       Authorization: 'Token token=' + store.user.token
-    }
+    },
+    data: ''
   })
 }
 
+const createMultiplayer = function () {
+  return $.ajax({
+    url: config.apiUrl + '/games/' + store.game.id,
+    method: 'PATCH',
+    headers: {
+      contentType: 'application/json',
+      Authorization: 'Token token=' + store.user.token
+    },
+    data: ``
+  })
+}
 module.exports = {
   signUp,
   signIn,
@@ -93,5 +106,6 @@ module.exports = {
   startGame,
   updateBoard,
   showGame,
-  getIndex
+  getIndex,
+  createMultiplayer
 }
