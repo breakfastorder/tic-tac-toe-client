@@ -91,9 +91,6 @@ const onSignIn = function (event) { // taking in sign in form
   api.signIn(data)
     .then(ui.onSignInSuccess)
     .catch(ui.onSignInFailure)
-
-  store.showMenu = false
-  $('#menu-options').show()
 }
 
 const onSignOut = function (event) {

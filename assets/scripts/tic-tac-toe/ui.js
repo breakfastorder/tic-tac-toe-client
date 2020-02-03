@@ -23,6 +23,9 @@ const onSignInSuccess = function (response) {
   $('#sign-in').hide()
 
   $('#game-start').show()
+
+  store.showMenu = false
+  $('#menu-options').show()
 }
 
 const onSignInFailure = function (response) {
