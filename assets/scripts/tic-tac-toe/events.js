@@ -4,16 +4,17 @@ const ui = require('./ui')
 const store = require('./../store')
 const gameLogic = require('./gameLogic')
 
-store.player = true
-
+store.playerX = true
+store.gameStart = false
+store.showMenu = false
 const placeGamePieces = function (event) {
-  if (gameLogic.getGameOver() === false) {
-    // console.log(placeMarkerX)
+  if (store.gameOver === false && store.gameStart === true) {
     event.preventDefault()
     const spot = event.target
-    console.log(spot.id + ' spot id')
-    if ((store.player && $(spot).text() !== 'X') && (store.player && $(spot).text() !== 'O')) { // same thing
-      $(spot).text('X') //if buttons do html
+    if ((store.playerX && $(spot).text() !== 'X') && (store.playerX && $(spot).text() !== 'O')) { // same thing
+      $(spot).text('X') // if buttons do html
+      store.game.cells[spot.id] = 'x'
+      gameLogic.checkWinLoss()
       const data = {
 
         'game': {
@@ -21,15 +22,18 @@ const placeGamePieces = function (event) {
             'index': spot.id,
             'value': 'x'
           },
-          'gameOver': gameLogic.getGameOver()
+          'over': store.gameOver
         }
       }
+      // console.log(data)
       api.updateBoard(data)
         .then(ui.updateBoardSuccess)
         .catch(ui.updateBoardFailure)
-      store.player = !store.player
-    } else if ((store.player === false && $(spot).text() !== 'X') && (store.player === false && $(spot).text() !== 'O')) { // same thing
+      store.playerX = !store.playerX
+    } else if ((store.playerX === false && $(spot).text() !== 'X') && (store.playerX === false && $(spot).text() !== 'O')) { // same thing
       $(spot).text('O') // if buttons do html
+      store.game.cells[spot.id] = 'o'
+      gameLogic.checkWinLoss()
       const data = {
 
         'game': {
@@ -37,29 +41,41 @@ const placeGamePieces = function (event) {
             'index': spot.id,
             'value': 'o'
           },
-          'gameOver': gameLogic.getGameOver()
+          'over': store.gameOver
         }
       }
+      // console.log(data)
       api.updateBoard(data)
         .then(ui.updateBoardSuccess)
         .catch(ui.updateBoardFailure)
-      store.player = !store.player
+      store.playerX = !store.playerX
     }
+  } else if (store.gameStart !== true && store.user === null) {
+    $('#message').html('Please sign in before playing')
+  } else if (store.gameStart !== true) {
+    $('#message').html('Please start a game')
   }
 }
 
 const gameStart = function () {
-  $('.col-4').show()
-  $('#game-start').hide()
+  store.gameStart = true
+  store.gameOver = false
+  store.playerX = true
+  $('#reset-game').show()
+
   const game = store.game
+
   api.startGame(game)
     .then(ui.startGameSuccess)
     .catch(ui.startGameFailure)
-  // console.log(store.game)
+  $('#total-games').show()
+  onGetIndexGames()
+
+  $('#game-start').hide()
 }
 
 const onSignUp = function (event) {
-  console.log('inSignUp')
+  // console.log('inSignUp')
   event.preventDefault()
   const form = event.target
   const data = getFormFields(form)
@@ -75,15 +91,28 @@ const onSignIn = function (event) { // taking in sign in form
   api.signIn(data)
     .then(ui.onSignInSuccess)
     .catch(ui.onSignInFailure)
+
+  store.showMenu = false
+  $('#menu-options').show()
 }
 
 const onSignOut = function (event) {
   event.preventDefault()
   const form = event.target
   const data = getFormFields(form)
+  // onResetGame()
   api.signOut(data)
     .then(ui.onSignOutSuccess)
     .catch(ui.onSignOutFailure)
+
+  $('#menu-options').hide()
+  $('#show-hide-menu').hide()
+
+  $('#game-start').hide()
+  store.gameStart = false
+
+  $('#reset-game').hide()
+  $('#total-games').hide()
 }
 
 const onChangePassword = function (event) {
@@ -98,28 +127,62 @@ const onChangePassword = function (event) {
 
 const showBoardStatus = function () {
   event.preventDefault()
-  console.log(store.game)
+  // console.log(store.game)
   api.showGame(store.game.id)
     .then(ui.onShowSuccess)
     .catch(ui.onShowFailure)
 }
 
+const onGetIndexGames = function () {
+  event.preventDefault()
+  api.getIndex()
+    .then(ui.onIndexSuccess)
+    .catch(ui.onIndexFailure)
+}
+
 const onResetGame = function () {
   event.preventDefault()
-  // gameLogic.resetGame()
   store.game = null
   gameStart()
-  $('#0').html('')
-  $('#1').html('')
-  $('#2').html('')
-  $('#3').html('')
-  $('#4').html('')
-  $('#5').html('')
-  $('#6').html('')
-  $('#7').html('')
-  $('#8').html('')
-  gameLogic.setGameOver(false)
-  store.player = true
+  $('#0').html('&nbsp;')
+  $('#1').html('&nbsp;')
+  $('#2').html('&nbsp;')
+  $('#3').html('&nbsp;')
+  $('#4').html('&nbsp;')
+  $('#5').html('&nbsp;')
+  $('#6').html('&nbsp;')
+  $('#7').html('&nbsp;')
+  $('#8').html('&nbsp;')
+  // onGetIndexGames()
+}
+
+const checkValid = function (event) {
+  if (store.gameStart) {
+    const spot = event.target
+    if ($(spot).text() !== 'X' && $(spot).text() !== 'O') {
+      $(spot).css('background-color', 'rgb(204, 255, 204)')
+    } else if ($(spot).text() === 'X' || $(spot).text() === 'O') {
+      $(spot).css('background-color', 'rgb(255, 230, 230)')
+    }
+  }
+}
+
+const resetToWhite = function (event) {
+  if (store.gameStart) {
+    const spot = event.target
+    $(spot).css('background-color', 'white')
+  }
+}
+
+const showMenu = function (event) {
+  if (!store.showMenu) {
+    // $('#show-hide-menu').show()
+    $('#show-hide-menu').fadeIn(300)
+  } else if (store.showMenu) {
+    // $('#show-hide-menu').hide()
+    $('#show-hide-menu').fadeOut(300)
+  }
+  store.showMenu = !store.showMenu
 }
 
 const testClick = function (event) {
@@ -136,5 +199,9 @@ module.exports = {
   gameStart,
   showBoardStatus,
   onResetGame,
-  testClick
+  testClick,
+  onGetIndexGames,
+  checkValid,
+  resetToWhite,
+  showMenu
 }

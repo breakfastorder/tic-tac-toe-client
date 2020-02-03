@@ -11,9 +11,12 @@ $(() => {
   $('#sign-out').hide()
 
   $('#game-start').hide()
-  // $('.col-4').hide()
   $('#reset-game').hide()
   $('#game-status').hide()
+  $('#total-games').hide()
+
+  $('#menu-options').hide()
+  $('#show-hide-menu').hide()
 
   $('#sign-up').on('submit', events.onSignUp)
   $('#sign-in').on('submit', events.onSignIn)
@@ -30,8 +33,37 @@ $(() => {
   $('#7').on('click', events.placeGamePieces)
   $('#8').on('click', events.placeGamePieces)
 
+  $('#menu-button').on('click', events.showMenu)
+
+  $('#0').on('mouseenter', events.checkValid)
+  $('#0').on('mouseout', events.resetToWhite)
+
+  $('#1').on('mouseenter', events.checkValid)
+  $('#1').on('mouseout', events.resetToWhite)
+
+  $('#2').on('mouseenter', events.checkValid)
+  $('#2').on('mouseout', events.resetToWhite)
+
+  $('#3').on('mouseenter', events.checkValid)
+  $('#3').on('mouseout', events.resetToWhite)
+
+  $('#4').on('mouseenter', events.checkValid)
+  $('#4').on('mouseout', events.resetToWhite)
+
+  $('#5').on('mouseenter', events.checkValid)
+  $('#5').on('mouseout', events.resetToWhite)
+
+  $('#6').on('mouseenter', events.checkValid)
+  $('#6').on('mouseout', events.resetToWhite)
+
+  $('#7').on('mouseenter', events.checkValid)
+  $('#7').on('mouseout', events.resetToWhite)
+
+  $('#8').on('mouseenter', events.checkValid)
+  $('#8').on('mouseout', events.resetToWhite)
+
   $('#game-start').on('click', events.gameStart)
-  $('#game-status').on('submit', events.showBoardStatus)
+  // $('#game-status').on('submit', events.showBoardStatus)
 
   $('#reset-game').on('submit', events.onResetGame)
 })

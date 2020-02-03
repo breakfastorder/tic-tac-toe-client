@@ -1,13 +1,15 @@
 const store = require('./../store')
 // const api = require('./api')
 // const ui = require('./ui')
-// const events = require('./events.js')
+// const events = require('./events.js') // cant have circular require
 
-let gameOver = false
-
+store.playerXWin = null
+store.gameTie = false
 const checkWinLoss = function () {
   // get the array
   const game = store.game.cells
+  // console.log(game)
+  let gameOver = false
   let tie = false
   let playerX = null
 
@@ -27,27 +29,27 @@ const checkWinLoss = function () {
   if (game1.every(element => element === 'x')) { // if every element of the array is x/o then win
     gameOver = true
     playerX = true
-    console.log('every 1x')
+    // // console.log('every 1x')
   } else if (game2.every(element => element === 'x')) {
-    console.log('every 2x')
+    // // console.log('every 2x')
     gameOver = true
     playerX = true
   } else if (game3.every(element => element === 'x')) {
-    console.log('every 3x')
+    // console.log('every 3x')
     gameOver = true
     playerX = true
   }
 
   if (game1.every(element => element === 'o')) { // if every element of the array is x/o then win
     gameOver = true
-    console.log('every 1o')
+    // console.log('every 1o')
     playerX = false
   } else if (game2.every(element => element === 'o')) {
-    console.log('every 2o')
+    // console.log('every 2o')
     gameOver = true
     playerX = false
   } else if (game3.every(element => element === 'o')) {
-    console.log('every 3o')
+    // console.log('every 3o')
     gameOver = true
     playerX = false
   }
@@ -60,8 +62,8 @@ const checkWinLoss = function () {
     }
 
     if (game[i + 3] === checkFor && game[i + 6] === checkFor) {
-      console.log('checkFor normal')
-      playerX = game[i] === 'x'
+      // console.log('checkFor normal')
+      playerX = (game[i] === 'x')
       gameOver = true
     }
   }
@@ -78,42 +80,43 @@ const checkWinLoss = function () {
   }
 
   if (game[4] === checkFor1 && game[8] === checkFor1) {
-    console.log(' in check 1')
-    playerX = game[0] === 'x'
+    // console.log(' in check 1')
+    playerX = (game[0] === 'x')
     gameOver = true
   }
 
   if (game[4] === checkFor2 && game[6] === checkFor2) {
-    console.log(' in check 2')
-    playerX = game[2] === 'x'
+    // console.log(' in check 2')
+    playerX = (game[2] === 'x')
     gameOver = true
   }
-  if (playerX === null) {
+  if (gameOver === false) {
+    // console.log('inside tie statement')
     tie = game.every(element => element !== '')
+    // console.log(tie + ' tie')
   }
   if (gameOver === true && tie === false) {
     if (playerX) {
+      store.gameStart = false
+      store.playerXWin = true
+      store.gameOver = true
       $('#message').html('X Won!')
     }
 
     if (playerX === false) {
+      store.gameStart = false
+      store.playerXWin = false
+      store.gameOver = true
       $('#message').html('O Won!')
     }
-  } else if (gameOver === true && tie === true) {
-    $('#message').html('Game over, result is a Tie')
+  } else if (tie === true) {
+    store.gameStart = false
+    store.gameTie = true
+    store.gameOver = true
+    $('#message').html('Game is a tie')
   }
 }
 
-const getGameOver = function () {
-  return gameOver
-}
-
-const setGameOver = function (value) {
-  gameOver = value
-}
-
 module.exports = {
-  checkWinLoss,
-  getGameOver,
-  setGameOver
+  checkWinLoss
 }

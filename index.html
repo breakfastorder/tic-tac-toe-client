@@ -31,6 +31,12 @@
             <input type='submit' value='Sign In!'>
         </form>
 
+    <div id='menu-options' class='menu'>
+      <button name id='menu-button'>Menu</button>
+
+      <div id='show-hide-menu' class='show-menu'>
+
+
         <form id='change-password'>
           <input name="passwords[old]" type="password" placeholder='Old Password'>
           <input name="passwords[new]" type="password" placeholder='New Password'>
@@ -41,99 +47,81 @@
           <input type='submit' value='Sign Out'>
         </form>
 
-        <form id='game-status'>
-          <input type='submit' value='Game Status'>
-        </form>
+
+
+      </div>
+    </div>
 
         <form id='reset-game'>
-          <input type='submit' value='reset'>
+          <input type='submit' value='Reset Game'>
         </form>
       </div>
+
+      <form id='total-games'>
+        <div> Total Games Played</div>
+        <div id='display-total-games'>&nbsp;
+      </div>
+    </form>
+
+
+
+
+
 
 <!--                                                                         -->
 
 
 
 
+        <button id='game-start'>Start New Game</button>
 
+      <div class='container text-center'>
+        <div class='board'>
 
-        <div class='container-fluid text-center'>
+          <div class='row'>
+              <div id='0' class='col zero'  >
+                  &nbsp;
+              </div>
 
-            <!-- <div class='col-4'>
-              <button id='0'></button>
-            </div>
+              <div id='1' class='col one' >
+                  &nbsp;
+              </div>
 
-            <div class='col-4'>
-              <button id='1'></button>
-            </div>
-
-            <div class='col-4'>
-              <button id='2'></button>
-            </div>
-
-            <div class='col-4'>
-              <button id='3'></button>
-            </div>
-
-            <div class='col-4'>
-              <button id='4'></button>
-            </div>
-
-            <div class='col-4'>
-              <button id='5'></button>
-            </div>
-
-            <div class='col-4'>
-              <button id='6'></button>
-            </div>
-
-            <div class='col-4'>
-              <button id='7'></button>
-            </div>
-
-            <div class='col-4'>
-              <button id='8'></button>
-            </div> -->
-
-          <div class='board'>
-            <div id='1' class='col-4 zero' >
-                &nbsp;
-            </div>
-
-            <div id='1' class='col-4 one' >
-                &nbsp;
-            </div>
-
-            <div id='2' class='col-4 two' >
-                &nbsp;
-            </div>
-
-            <div id='3' class='col-4 three' >
-                &nbsp;
-            </div>
-
-            <div id='4' class='col-4 four' >
-                &nbsp;
-            </div>
-
-            <div id='5' class='col-4 five' >
-                &nbsp;
-            </div>
-
-            <div id='6' class='col-4 six' >
-                &nbsp;
-            </div>
-
-            <div id='7' class='col-4 seven' >
-                &nbsp;
-            </div>
-
-            <div id='8' class='col-4 eight' >
-                &nbsp;
-            </div>
-
-            <button id='game-start'>Start New Game</button>
+              <div id='2' class='col two' >
+                  &nbsp;
+              </div>
           </div>
+
+          <div class='row'>
+
+              <div id='3' class='col three' >
+                  &nbsp;
+              </div>
+
+              <div id='4' class='col four' >
+                  &nbsp;
+              </div>
+
+              <div id='5' class='col five' >
+                  &nbsp;
+              </div>
+          </div>
+
+          <div class='row'>
+              <div id='6' class='col six' >
+                  &nbsp;
+              </div>
+
+              <div id='7' class='col seven' >
+                  &nbsp;
+              </div>
+
+              <div id='8' class='col eight' >
+                  &nbsp;
+              </div>
+          </div>
+
+        </div>
 
       </div>
     </body>

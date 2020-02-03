@@ -51,7 +51,6 @@ const startGame = function (game) {
 }
 
 const updateBoard = function (update) {
-  console.log(update)
   return $.ajax({
     url: config.apiUrl + '/games/' + store.game.id,
     method: 'PATCH',
@@ -75,6 +74,17 @@ const showGame = function (id) {
   })
 }
 
+const getIndex = function () {
+  return $.ajax({
+    url: config.apiUrl + '/games?over=true',
+    method: 'GET',
+    headers: {
+      contentType: 'application/json',
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
 module.exports = {
   signUp,
   signIn,
@@ -82,5 +92,6 @@ module.exports = {
   signOut,
   startGame,
   updateBoard,
-  showGame
+  showGame,
+  getIndex
 }
