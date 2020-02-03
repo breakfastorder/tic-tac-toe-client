@@ -52,7 +52,7 @@ const placeGamePieces = function (event) {
     }
   } else if (store.gameStart !== true && store.user === null) {
     $('#message').html('Please sign in before playing')
-  } else if (store.gameStart !== true) {
+  } else if (store.gameStart !== true && store.gameOver !== true) {
     $('#message').html('Please start a game')
   }
 }
