@@ -25,7 +25,6 @@ const placeGamePieces = function (event) {
           'over': store.gameOver
         }
       }
-      // console.log(data)
       api.updateBoard(data)
         .then(ui.updateBoardSuccess)
         .catch(ui.updateBoardFailure)
@@ -44,7 +43,6 @@ const placeGamePieces = function (event) {
           'over': store.gameOver
         }
       }
-      // console.log(data)
       api.updateBoard(data)
         .then(ui.updateBoardSuccess)
         .catch(ui.updateBoardFailure)
@@ -75,7 +73,6 @@ const gameStart = function () {
 }
 
 const onSignUp = function (event) {
-  // console.log('inSignUp')
   event.preventDefault()
   const form = event.target
   const data = getFormFields(form)
@@ -97,7 +94,6 @@ const onSignOut = function (event) {
   event.preventDefault()
   const form = event.target
   const data = getFormFields(form)
-  // onResetGame()
   api.signOut(data)
     .then(ui.onSignOutSuccess)
     .catch(ui.onSignOutFailure)
@@ -124,7 +120,6 @@ const onChangePassword = function (event) {
 
 const showBoardStatus = function () {
   event.preventDefault()
-  // console.log(store.game)
   api.showGame(store.game.id)
     .then(ui.onShowSuccess)
     .catch(ui.onShowFailure)
@@ -150,7 +145,6 @@ const onResetGame = function () {
   $('#6').html('&nbsp;')
   $('#7').html('&nbsp;')
   $('#8').html('&nbsp;')
-  // onGetIndexGames()
 }
 
 const checkValid = function (event) {
@@ -173,10 +167,8 @@ const resetToWhite = function (event) {
 
 const showMenu = function (event) {
   if (!store.showMenu) {
-    // $('#show-hide-menu').show()
     $('#show-hide-menu').fadeIn(300)
   } else if (store.showMenu) {
-    // $('#show-hide-menu').hide()
     $('#show-hide-menu').fadeOut(300)
   }
   store.showMenu = !store.showMenu

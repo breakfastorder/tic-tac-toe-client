@@ -1,5 +1,4 @@
 const store = require('./../store')
-// const gameLogic = require('./gameLogic')
 
 const onSignUpSuccess = function (response) {
   $('#message').html(response.user.email + ' has been signed up successfully')
@@ -33,37 +32,6 @@ const onSignInFailure = function (response) {
   $('#sign-in').trigger('reset')
 }
 
-const startGameSuccess = function (response) {
-  $('col-4').show()
-  $('#message').html('Game created')
-  store.game = response.game
-}
-
-const updateBoardSuccess = function (response) {
-  if (store.gameOver === false) {
-    $('#message').html('Game updated')
-  }
-
-  store.game = response.game
-  // console.log(response)
-}
-
-const updateBoardFailure = function (response) {
-  $('#message').html('Update failed')
-}
-
-const onShowSuccess = function (response) {
-  $('#message').html('Show sucess')
-}
-
-const onShowFailure = function (response) {
-  $('#message').html('Show failed')
-}
-
-const startGameFailure = function (response) {
-  $('#message').html('Game creation failed, please try again')
-}
-
 const onSignOutSuccess = function (response) {
   $('#message').html('User has been signed out')
   store.user = null
@@ -81,16 +49,6 @@ const onSignOutFailure = function (response) {
   $('#sign-out').trigger('reset')
 }
 
-const onIndexSuccess = function (response) {
-  // console.log(response)
-  $('#display-total-games').html('')
-  $('#display-total-games').html(response.games.length)
-}
-
-const onIndexFailure = function (response) {
-  $('#message').html('Get total games request failed')
-}
-
 const onChangePasswordSuccess = function (response) {
   $('#message').html('Password has been changed successfully')
   $('#change-password').trigger('reset')
@@ -99,6 +57,44 @@ const onChangePasswordSuccess = function (response) {
 const onChangePasswordFailure = function (response) {
   $('#message').html('Attempt to change password failed, please try again')
   $('#change-password').trigger('reset')
+}
+
+const startGameSuccess = function (response) {
+  $('col-4').show()
+  $('#message').html('Game created')
+  store.game = response.game
+}
+
+const startGameFailure = function (response) {
+  $('#message').html('Game creation failed, please try again')
+}
+
+const updateBoardSuccess = function (response) {
+  if (store.gameOver === false) {
+    $('#message').html('Game updated')
+  }
+  store.game = response.game
+}
+
+const updateBoardFailure = function (response) {
+  $('#message').html('Update failed')
+}
+
+const onShowSuccess = function (response) {
+  $('#message').html('Show sucess')
+}
+
+const onShowFailure = function (response) {
+  $('#message').html('Show failed')
+}
+
+const onIndexSuccess = function (response) {
+  $('#display-total-games').html('')
+  $('#display-total-games').html(response.games.length)
+}
+
+const onIndexFailure = function (response) {
+  $('#message').html('Get total games request failed')
 }
 
 module.exports = {

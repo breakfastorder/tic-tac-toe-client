@@ -9,12 +9,10 @@ const events = require('./tic-tac-toe/events')
 $(() => {
   $('#change-password').hide()
   $('#sign-out').hide()
-
   $('#game-start').hide()
   $('#reset-game').hide()
   $('#game-status').hide()
   $('#total-games').hide()
-
   $('#menu-options').hide()
   $('#show-hide-menu').hide()
 
@@ -22,6 +20,7 @@ $(() => {
   $('#sign-in').on('submit', events.onSignIn)
   $('#change-password').on('submit', events.onChangePassword)
   $('#sign-out').on('submit', events.onSignOut)
+  $('#reset-game').on('submit', events.onResetGame)
 
   $('#0').on('click', events.placeGamePieces)
   $('#1').on('click', events.placeGamePieces)
@@ -33,6 +32,7 @@ $(() => {
   $('#7').on('click', events.placeGamePieces)
   $('#8').on('click', events.placeGamePieces)
 
+  $('#game-start').on('click', events.gameStart)
   $('#menu-button').on('click', events.showMenu)
 
   $('#0').on('mouseenter', events.checkValid)
@@ -61,9 +61,4 @@ $(() => {
 
   $('#8').on('mouseenter', events.checkValid)
   $('#8').on('mouseout', events.resetToWhite)
-
-  $('#game-start').on('click', events.gameStart)
-  // $('#game-status').on('submit', events.showBoardStatus)
-
-  $('#reset-game').on('submit', events.onResetGame)
 })
