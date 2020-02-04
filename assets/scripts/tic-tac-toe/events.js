@@ -7,12 +7,15 @@ const gameLogic = require('./gameLogic')
 store.playerX = true
 store.gameStart = false
 store.showMenu = false
+
 const placeGamePieces = function (event) {
   if (store.gameOver === false && store.gameStart === true) {
     event.preventDefault()
     const spot = event.target
     if ((store.playerX && $(spot).text() !== 'X') && (store.playerX && $(spot).text() !== 'O')) { // same thing
-      $(spot).text('X') // if buttons do html
+      // $(spot).text('X') // if buttons do html
+      // $(spot).html('<img src="https://d1si3tbndbzwz9.cloudfront.net/football/team/24/logo.png"')
+      changeImage(spot.id, store.imageOne)
       store.game.cells[spot.id] = 'x'
       gameLogic.checkWinLoss()
       const data = {
@@ -30,7 +33,8 @@ const placeGamePieces = function (event) {
         .catch(ui.updateBoardFailure)
       store.playerX = !store.playerX
     } else if ((store.playerX === false && $(spot).text() !== 'X') && (store.playerX === false && $(spot).text() !== 'O')) { // same thing
-      $(spot).text('O') // if buttons do html
+      // $(spot).text('O') // if buttons do html
+      changeImage(spot.id, store.imageTwo)
       store.game.cells[spot.id] = 'o'
       gameLogic.checkWinLoss()
       const data = {
@@ -174,10 +178,30 @@ const showMenu = function (event) {
   store.showMenu = !store.showMenu
 }
 
+const setMarkerImage = function (event) {
+  event.preventDefault()
+
+  const form = event.target
+  const data = getFormFields(form)
+
+  store.imageOne = data.playerImageOne
+  $('#playerX').html(`<img id='imageOne' name='1' src='${store.imageOne}' height='100' width='100'>`)
+  store.imageTwo = data.playerImageTwo
+  $('#playerY').html(`<img id='imageTwo' name='2' src='${store.imageTwo}' height='100' width='100'>`)
+  changeImage()
+  $('#gamePics').show()
+}
+
 const testClick = function (event) {
   event.preventDefault()
   const spot = event.target
   $(spot).text('X')
+}
+
+const changeImage = function (location, image) {
+  event.preventDefault()
+  $('#imageOne').show()
+  $('#' + location).html(`<img id='imageOne' name='1' src='${image}' height='50' width='50'>`)
 }
 module.exports = {
   placeGamePieces,
@@ -192,5 +216,7 @@ module.exports = {
   onGetIndexGames,
   checkValid,
   resetToWhite,
-  showMenu
+  showMenu,
+  setMarkerImage,
+  changeImage
 }

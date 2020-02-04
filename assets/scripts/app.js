@@ -16,11 +16,23 @@ $(() => {
   $('#menu-options').hide()
   $('#show-hide-menu').hide()
 
+  $('#imageOne').hide()
+  $('#imageTwo').hide()
+  $('#imageThree').hide()
+  $('#imageFour').hide()
+  $('#imageFive').hide()
+  $('#imageSix').hide()
+  $('#imageSeven').hide()
+  $('#imageEight').hide()
+  $('#imageNine').hide()
+  $('#gamePics').hide()
+
   $('#sign-up').on('submit', events.onSignUp)
   $('#sign-in').on('submit', events.onSignIn)
   $('#change-password').on('submit', events.onChangePassword)
   $('#sign-out').on('submit', events.onSignOut)
   $('#reset-game').on('submit', events.onResetGame)
+  $('#image-form').on('submit', events.setMarkerImage)
 
   $('#0').on('click', events.placeGamePieces)
   $('#1').on('click', events.placeGamePieces)
