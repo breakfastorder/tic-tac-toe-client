@@ -17,6 +17,9 @@
       <div id='message'>&nbsp;
       </div>
 
+      <div id='#watch-index'> </div>
+      <div id='#watch-value'> </div>
+
       <div class='forms'>
         <form id='sign-up'>
             <input name="credentials[email]" type="text" placeholder="an@example.email">
@@ -37,7 +40,9 @@
       <div id='show-hide-menu' class='show-menu'>
 
         <form id='create-multiplayer'>
+          <input name="p2ID" type="text" placeholder="an@example.email">
           <input type='submit' value='Create multiplayer game'>
+          <button name id='gameId'>Get Game ID</button>
         </form>
 
         <form id='change-password'>

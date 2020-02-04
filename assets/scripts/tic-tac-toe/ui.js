@@ -1,6 +1,11 @@
 const store = require('./../store')
 // const gameLogic = require('./gameLogic')
+const resourceWatcher = require('./resourceWatcher')
+const config = require('./../config')
+const api = require('./api')
 
+
+let gameWatcher = null
 const onSignUpSuccess = function (response) {
   $('#message').html(response.user.email + ' has been signed up successfully')
   $('#sign-up').trigger('reset')
@@ -103,11 +108,52 @@ const onChangePasswordFailure = function (response) {
 }
 
 const createMultiplayerSuccess = function (response) {
-  console.log('one step at a time')
+  $('#message').html('Connected to game successfully')
+  console.log(response + ' response')
+  // store.p2ID = response.user.id
+  // does each user need to have a individual update? Each user can use their own id?
+  // I am not focusing on one script for both, its specialised into each user being solo
+
+  if (store.game.id !== store.p2ID) {
+    store.game.id = store.p2ID
+  }
+  console.log(store.game.id + ' game id ' + store.p2ID + ' p2 game id')
+  gameWatcher = resourceWatcher.resourceWatcher(config.apiUrl + '/games/' + store.game.id + '/watch', {
+    Authorization: 'Token token=' + store.user.token
+  })
+  watchForChange(response)
 }
 
 const createMultiplayerFailure = function (response) {
-  console.log(response)
+  $('#message').html('failed to connect to game')
+}
+
+const watchForChange = function () {
+  gameWatcher.on('change', function (data) {
+    console.log(data)
+    if (data.game && data.game.cells) {
+      const diff = changes => {
+        const before = changes[0]
+        const after = changes[1]
+        for (let i = 0; i < after.length; i++) {
+          if (before[i] !== after[i]) {
+            return {
+              index: i,
+              value: after[i]
+            }
+          }
+        }
+
+        return { index: -1, value: '' }
+      }
+
+      const cell = diff(data.game.cells)
+      $('#watch-index').val(cell.index)
+      $('#watch-value').val(cell.value)
+    } else if (data.timeout) { // not an error
+      gameWatcher.close()
+    }
+  })
 }
 
 module.exports = {

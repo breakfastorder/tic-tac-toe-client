@@ -64,7 +64,7 @@ $(() => {
 
   $('#game-start').on('click', events.gameStart)
   // $('#game-status').on('submit', events.showBoardStatus)
-
+  $('#gameId').on('click', events.displayId)
   $('#reset-game').on('submit', events.onResetGame)
 
   $('#create-multiplayer').on('submit', events.onCreateMultiplayer)

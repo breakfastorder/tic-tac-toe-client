@@ -44,10 +44,10 @@ const startGame = function (game) {
   return $.ajax({
     method: 'POST',
     url: config.apiUrl + '/games',
+    game,
     headers: {
       Authorization: 'Token token=' + store.user.token
-    },
-    game
+    }
   })
 }
 
@@ -87,17 +87,31 @@ const getIndex = function () {
   })
 }
 
-const createMultiplayer = function () {
+//p1 token: p2 gameId - p1 into p2
+const createMultiplayer = function (data) {
   return $.ajax({
-    url: config.apiUrl + '/games/' + store.game.id,
+    url: config.apiUrl + '/games/' + data.p2ID,
     method: 'PATCH',
     headers: {
       contentType: 'application/json',
       Authorization: 'Token token=' + store.user.token
     },
-    data: ``
+    data: {}
   })
 }
+
+const updateMultiplayer = function (update) {
+  return $.ajax({
+    url: config.apiUrl + '/games/' + store.p2ID,
+    method: 'PATCH',
+    headers: {
+      contentType: 'application/json',
+      Authorization: 'Token token=' + store.user.token
+    },
+    data: update
+  })
+}
+
 module.exports = {
   signUp,
   signIn,
@@ -107,5 +121,6 @@ module.exports = {
   updateBoard,
   showGame,
   getIndex,
-  createMultiplayer
+  createMultiplayer,
+  updateMultiplayer
 }

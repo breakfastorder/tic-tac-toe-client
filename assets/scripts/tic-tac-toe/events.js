@@ -19,14 +19,14 @@ const placeGamePieces = function (event) {
 
         'game': {
           'cell': {
-            'index': spot.id,
+            'index': 0,
             'value': 'x'
           },
-          'over': store.gameOver
+          'over': false
         }
       }
       // console.log(data)
-      api.updateBoard(data)
+      api.updateMultiplayer(data)
         .then(ui.updateBoardSuccess)
         .catch(ui.updateBoardFailure)
       store.playerX = !store.playerX
@@ -38,14 +38,14 @@ const placeGamePieces = function (event) {
 
         'game': {
           'cell': {
-            'index': spot.id,
+            'index': 1,
             'value': 'o'
           },
-          'over': store.gameOver
+          'over': false
         }
       }
       // console.log(data)
-      api.updateBoard(data)
+      api.updateMultiplayer(data)
         .then(ui.updateBoardSuccess)
         .catch(ui.updateBoardFailure)
       store.playerX = !store.playerX
@@ -181,12 +181,19 @@ const showMenu = function (event) {
   store.showMenu = !store.showMenu
 }
 
-const onCreateMultiplayer = function () {
+const onCreateMultiplayer = function (event) {
   event.preventDefault()
-  // const game = store.game
-  api.createMultiplayer()
+  const form = event.target
+  const data = getFormFields(form)
+  // console.log(data.p2ID + ' P2DATA')
+  store.p2ID = data.p2ID
+  api.createMultiplayer(data)
     .then(ui.createMultiplayerSuccess)
     .catch(ui.createMultiplayerFailure)
+}
+
+const displayId = function () {
+  $('#message').html('Game Id is ' + store.game.id)
 }
 
 const testClick = function (event) {
@@ -208,5 +215,6 @@ module.exports = {
   checkValid,
   resetToWhite,
   showMenu,
-  onCreateMultiplayer
+  onCreateMultiplayer,
+  displayId
 }
