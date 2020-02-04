@@ -7,16 +7,18 @@ const gameLogic = require('./gameLogic')
 store.playerX = true
 store.gameStart = false
 store.showMenu = false
-
+store.useImage = false
 const placeGamePieces = function (event) {
   if (store.gameOver === false && store.gameStart === true) {
     event.preventDefault()
     const spot = event.target
-    if ((store.playerX && $(spot).text() !== 'X') && (store.playerX && $(spot).text() !== 'O')) { // same thing
-      // $(spot).text('X') // if buttons do html
-      // $(spot).html('<img src="https://d1si3tbndbzwz9.cloudfront.net/football/team/24/logo.png"')
-      changeImage(spot.id, store.imageOne)
+    if (((store.playerX && $(spot).text() !== 'X') && (store.playerX && $(spot).text() !== 'O'))) { // same thing
+      $(spot).text('X')
       store.game.cells[spot.id] = 'x'
+      // console.log(store.game.cells)
+      if (store.useImage) {
+        changeImage()
+      }
       gameLogic.checkWinLoss()
       const data = {
 
@@ -32,10 +34,13 @@ const placeGamePieces = function (event) {
         .then(ui.updateBoardSuccess)
         .catch(ui.updateBoardFailure)
       store.playerX = !store.playerX
-    } else if ((store.playerX === false && $(spot).text() !== 'X') && (store.playerX === false && $(spot).text() !== 'O')) { // same thing
+    } else if (((store.playerX === false && $(spot).text() !== 'X') && (store.playerX === false && $(spot).text() !== 'O'))) { // same thing
       // $(spot).text('O') // if buttons do html
-      changeImage(spot.id, store.imageTwo)
+      $(spot).text('O')
       store.game.cells[spot.id] = 'o'
+      if (store.useImage) {
+        changeImage()
+      }
       gameLogic.checkWinLoss()
       const data = {
 
@@ -190,6 +195,7 @@ const setMarkerImage = function (event) {
   $('#playerY').html(`<img id='imageTwo' name='2' src='${store.imageTwo}' height='100' width='100'>`)
   changeImage()
   $('#gamePics').show()
+  store.useImage = true
 }
 
 const testClick = function (event) {
@@ -198,10 +204,17 @@ const testClick = function (event) {
   $(spot).text('X')
 }
 
-const changeImage = function (location, image) {
+const changeImage = function () {
   event.preventDefault()
-  $('#imageOne').show()
-  $('#' + location).html(`<img id='imageOne' name='1' src='${image}' height='50' width='50'>`)
+  const gameBoard = store.game.cells
+  console.log(gameBoard)
+  for (let i = 0; i < gameBoard.length; i++) {
+    if (gameBoard[i] === 'x') {
+      $('#' + i).html(`<img id='imageOne' name='1' src='${store.imageOne}' height='50' width='50'>`)
+    } else if (gameBoard[i] === 'o') {
+      $('#' + i).html(`<img id='imageTwo' name='2' src='${store.imageTwo}' height='50' width='50'>`)
+    }
+  }
 }
 module.exports = {
   placeGamePieces,
