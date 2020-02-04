@@ -13,39 +13,39 @@ const placeGamePieces = function (event) {
     const spot = event.target
     if ((store.playerX && $(spot).text() !== 'X') && (store.playerX && $(spot).text() !== 'O')) { // same thing
       $(spot).text('X') // if buttons do html
-      store.game.cells[spot.id] = 'x'
+      // store.game.cells[spot.id] = 'x'
       gameLogic.checkWinLoss()
       const data = {
 
         'game': {
           'cell': {
-            'index': 0,
+            'index': spot.id,
             'value': 'x'
           },
           'over': false
         }
       }
       // console.log(data)
-      api.updateMultiplayer(data)
+      api.updateBoard(data)
         .then(ui.updateBoardSuccess)
         .catch(ui.updateBoardFailure)
       store.playerX = !store.playerX
     } else if ((store.playerX === false && $(spot).text() !== 'X') && (store.playerX === false && $(spot).text() !== 'O')) { // same thing
       $(spot).text('O') // if buttons do html
-      store.game.cells[spot.id] = 'o'
+      // store.game.cells[spot.id] = 'o'
       gameLogic.checkWinLoss()
       const data = {
 
         'game': {
           'cell': {
-            'index': 1,
+            'index': spot.id,
             'value': 'o'
           },
           'over': false
         }
       }
       // console.log(data)
-      api.updateMultiplayer(data)
+      api.updateBoard(data)
         .then(ui.updateBoardSuccess)
         .catch(ui.updateBoardFailure)
       store.playerX = !store.playerX
@@ -194,6 +194,7 @@ const onCreateMultiplayer = function (event) {
 
 const displayId = function () {
   $('#message').html('Game Id is ' + store.game.id)
+  ui.setGameWatcher()
 }
 
 const testClick = function (event) {

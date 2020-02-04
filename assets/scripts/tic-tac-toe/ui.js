@@ -52,9 +52,13 @@ const startGameFailure = function (response) {
 const updateBoardSuccess = function (response) {
   if (store.gameOver === false) {
     $('#message').html('Game updated')
+    console.log(response.game.cells + ' game cells')
   }
-
   store.game = response.game
+
+  const bothArray = [response.game, store.game]
+  console.log(bothArray[0] + ' array 0 ' + bothArray[1])
+  watchForChange(bothArray)
   // console.log(response)
 }
 
@@ -109,19 +113,14 @@ const onChangePasswordFailure = function (response) {
 
 const createMultiplayerSuccess = function (response) {
   $('#message').html('Connected to game successfully')
-  console.log(response + ' response')
-  // store.p2ID = response.user.id
-  // does each user need to have a individual update? Each user can use their own id?
-  // I am not focusing on one script for both, its specialised into each user being solo
+  store.game.id = store.p2ID
+  setGameWatcher()
+}
 
-  if (store.game.id !== store.p2ID) {
-    store.game.id = store.p2ID
-  }
-  console.log(store.game.id + ' game id ' + store.p2ID + ' p2 game id')
+const setGameWatcher = function () {
   gameWatcher = resourceWatcher.resourceWatcher(config.apiUrl + '/games/' + store.game.id + '/watch', {
     Authorization: 'Token token=' + store.user.token
   })
-  watchForChange(response)
 }
 
 const createMultiplayerFailure = function (response) {
@@ -156,6 +155,14 @@ const watchForChange = function () {
   })
 }
 
+const updateMultiplayerBoardSuccess = function (response) {
+  console.log(response.game + ' success')
+}
+
+const updateMultiplayerBoardFailure = function (response) {
+
+}
+
 module.exports = {
   onSignUpSuccess,
   onSignUpFailure,
@@ -174,5 +181,8 @@ module.exports = {
   onIndexSuccess,
   onIndexFailure,
   createMultiplayerSuccess,
-  createMultiplayerFailure
+  createMultiplayerFailure,
+  updateMultiplayerBoardSuccess,
+  updateMultiplayerBoardFailure,
+  setGameWatcher
 }

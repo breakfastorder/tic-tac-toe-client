@@ -102,7 +102,7 @@ const createMultiplayer = function (data) {
 
 const updateMultiplayer = function (update) {
   return $.ajax({
-    url: config.apiUrl + '/games/' + store.p2ID,
+    url: config.apiUrl + '/games/' + store.game.id,
     method: 'PATCH',
     headers: {
       contentType: 'application/json',
