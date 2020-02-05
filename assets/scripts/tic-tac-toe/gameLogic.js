@@ -101,6 +101,7 @@ const checkWinLoss = function () {
       store.playerXWin = true
       store.gameOver = true
       $('#message').html('X Won!')
+      $('#turn-message').html(' ')
     }
 
     if (playerX === false) {
@@ -108,12 +109,14 @@ const checkWinLoss = function () {
       store.playerXWin = false
       store.gameOver = true
       $('#message').html('O Won!')
+      $('#turn-message').html(' ')
     }
   } else if (tie === true) {
     store.gameStart = false
     store.gameTie = true
     store.gameOver = true
     $('#message').html('Game is a tie')
+    $('#turn-message').html(' ')
   }
 }
 

@@ -10,6 +10,7 @@ store.showMenu = false
 const placeGamePieces = function (event) {
   if (store.gameOver === false && store.gameStart === true) {
     event.preventDefault()
+    $('#turn-message').text('It is Xs turn')
     const spot = event.target
     if ((store.playerX && $(spot).text() !== 'X') && (store.playerX && $(spot).text() !== 'O')) { // same thing
       $(spot).text('X') // if buttons do html
@@ -28,6 +29,11 @@ const placeGamePieces = function (event) {
       api.updateBoard(data)
         .then(ui.updateBoardSuccess)
         .catch(ui.updateBoardFailure)
+      if (store.playerX) {
+        $('#turn-message').text('It is Os turn')
+      } else {
+        $('#turn-message').text('It is Xs turn')
+      }
       store.playerX = !store.playerX
     } else if ((store.playerX === false && $(spot).text() !== 'X') && (store.playerX === false && $(spot).text() !== 'O')) { // same thing
       $(spot).text('O') // if buttons do html
@@ -46,6 +52,11 @@ const placeGamePieces = function (event) {
       api.updateBoard(data)
         .then(ui.updateBoardSuccess)
         .catch(ui.updateBoardFailure)
+        if (store.playerX) {
+          $('#turn-message').text('It is Os turn')
+        } else {
+          $('#turn-message').text('It is Xs turn')
+        }
       store.playerX = !store.playerX
     }
   } else if (store.gameStart !== true && store.user === null) {
@@ -56,6 +67,7 @@ const placeGamePieces = function (event) {
 }
 
 const gameStart = function () {
+  $('#turn-message').text('It is Xs turn')
   store.gameStart = true
   store.gameOver = false
   store.playerX = true

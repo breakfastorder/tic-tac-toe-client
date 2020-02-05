@@ -33,6 +33,17 @@ const onSignInFailure = function (response) {
 }
 
 const onSignOutSuccess = function (response) {
+
+  $('#0').html('&nbsp;')
+  $('#1').html('&nbsp;')
+  $('#2').html('&nbsp;')
+  $('#3').html('&nbsp;')
+  $('#4').html('&nbsp;')
+  $('#5').html('&nbsp;')
+  $('#6').html('&nbsp;')
+  $('#7').html('&nbsp;')
+  $('#8').html('&nbsp;')
+  $('#turn-message').html('')
   $('#message').html('User has been signed out')
   store.user = null
   $('#sign-out').trigger('reset')
@@ -70,6 +81,7 @@ const startGameFailure = function (response) {
 }
 
 const updateBoardSuccess = function (response) {
+  console.log(response)
   if (store.gameOver === false) {
     $('#message').html('Game updated')
   }
