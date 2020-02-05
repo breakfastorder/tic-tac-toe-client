@@ -81,7 +81,7 @@ const startGameFailure = function (response) {
 }
 
 const updateBoardSuccess = function (response) {
-  console.log(response)
+  // console.log(response)
   if (store.gameOver === false) {
     $('#message').html('Game updated')
   }
