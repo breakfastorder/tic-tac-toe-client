@@ -64,9 +64,11 @@ const placeGamePieces = function (event) {
   } else if (store.gameStart !== true && store.gameOver !== true) {
     $('#message').html('Please start a game')
   }
+  resetAllToWhite()
 }
 
 const gameStart = function () {
+  resetAllToWhite()
   $('#turn-message').text('It is Xs turn')
   store.gameStart = true
   store.gameOver = false
@@ -118,6 +120,10 @@ const onSignOut = function (event) {
 
   $('#reset-game').hide()
   $('#total-games').hide()
+
+  resetAllToWhite()
+
+  $('#change-password').trigger('reset')
 }
 
 const onChangePassword = function (event) {
@@ -177,6 +183,18 @@ const resetToWhite = function (event) {
   }
 }
 
+const resetAllToWhite = function (event) {
+  $('#0').css('background-color', 'white')
+  $('#1').css('background-color', 'white')
+  $('#2').css('background-color', 'white')
+  $('#3').css('background-color', 'white')
+  $('#4').css('background-color', 'white')
+  $('#5').css('background-color', 'white')
+  $('#6').css('background-color', 'white')
+  $('#7').css('background-color', 'white')
+  $('#8').css('background-color', 'white')
+}
+
 const showMenu = function (event) {
   if (!store.showMenu) {
     $('#show-hide-menu').fadeIn(300)
@@ -204,5 +222,6 @@ module.exports = {
   onGetIndexGames,
   checkValid,
   resetToWhite,
-  showMenu
+  showMenu,
+  resetAllToWhite
 }
