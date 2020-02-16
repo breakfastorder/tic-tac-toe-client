@@ -14,6 +14,7 @@ const onSignInSuccess = function (response) {
   $('#message').html(response.user.email + ' has been signed in')
   store.user = response.user
   $('#sign-in').trigger('reset')
+
   $('#sign-up').trigger('reset')
 
   $('#change-password').show()
