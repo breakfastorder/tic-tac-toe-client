@@ -2,7 +2,7 @@
 
   Play tic-tac-toe in the browser, and create a account to keep track of how
   many games you have played. Uses ajax calls to an api to complete and update
-  game
+  game so you can start a game anywhere, and pick it up later!
 
 # Website
 
@@ -10,7 +10,7 @@
 
 # Tech used
 
-  Google developer tools, ajax, JavaScript, and jquery calls
+  Google developer tools, ajax, JavaScript, Tic Tac Toe api and jquery calls
 
 # Planning
 

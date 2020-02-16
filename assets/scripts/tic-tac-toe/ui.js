@@ -14,6 +14,7 @@ const onSignInSuccess = function (response) {
   $('#message').html(response.user.email + ' has been signed in')
   store.user = response.user
   $('#sign-in').trigger('reset')
+  $('#sign-up').trigger('reset')
 
   $('#change-password').show()
   $('#sign-out').show()
@@ -33,7 +34,6 @@ const onSignInFailure = function (response) {
 }
 
 const onSignOutSuccess = function (response) {
-
   $('#0').html('&nbsp;')
   $('#1').html('&nbsp;')
   $('#2').html('&nbsp;')
@@ -43,7 +43,7 @@ const onSignOutSuccess = function (response) {
   $('#6').html('&nbsp;')
   $('#7').html('&nbsp;')
   $('#8').html('&nbsp;')
-  $('#turn-message').html('')
+  $('#turn-message').text('')
   $('#message').html('User has been signed out')
   store.user = null
   $('#sign-out').trigger('reset')
